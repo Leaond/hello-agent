@@ -28,7 +28,6 @@ Action的格式必须是以下之一：
 请开始吧！
 """
 
-import sys
 import requests
 
 def get_weather(city:str)->str:
@@ -65,12 +64,12 @@ import os
 from tavily import TavilyClient
 
 def get_attraction(city:str,weather:str)->str:
-    "根据城市和天气，使用API搜索并返回优化后的景点推荐"
+    "根据城市和天气,使用API搜索并返回优化后的景点推荐"
 
     # 1.从环境变量中读取API秘钥
     api_key = os.environ.get("TAVILY_API_KEY")
     if not api_key:
-        return "错误：未配置TAVILY_API_KEY环境变量"
+        return "错误:未配置TAVILY_API_KEY环境变量"
     
     # 2. 初始化tavily客户端
     tavily = TavilyClient(api_key=api_key)
@@ -81,6 +80,7 @@ def get_attraction(city:str,weather:str)->str:
     try:
         # 4. 调用API，include_answer=True会返回一个综合性的回答
         response = tavily.search(query=query,search_depth='basic',include_answer=True)
+        print('tavily返回结果========》',response)
 
         #5. Tavily返回的结果已经非常干净，可以直接使用
         # response['answer']是一个基于所有搜索结果的总结性回答
@@ -133,7 +133,7 @@ class OpenAICompatibleClient:
             return answer
         except Exception as e:
             print(f"调用大模型时发生错误：{e}")
-            return "错误："
+            return "错误:调用语言模型服务时出错。"
 
 
 # 主程序
@@ -153,14 +153,14 @@ llm = OpenAICompatibleClient(
 )
 
 # 2.初始化
-user_prompt = "你好，请帮我查询一下今天北京的天气，然后根据天气推荐一个合适的旅游景点"
+user_prompt = "你好，请帮我查询一下今天成都的天气，然后根据天气推荐一个合适的旅游景点"
 prompt_history = [f"用户请求：{user_prompt}"]
 
 print(f"用户输入：{user_prompt}\n","="*40)
 
 # 3. 运行主循环
 for i in range(5):
-    print(f"---循环{i+1}---\n")
+    print(f"---循环 {i+1}---\n")
 
     #3.1 构建prompt
     full_prompt = "\n".join(prompt_history)
