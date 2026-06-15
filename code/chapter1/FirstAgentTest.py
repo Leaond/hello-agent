@@ -57,9 +57,6 @@ def get_weather(city:str)->str:
         #解析天气数据错误
         return f"天气数据解析失败：{e}"
 
-res = get_weather("成都")
-print(res)
-
 import os
 from tavily import TavilyClient
 
@@ -162,7 +159,7 @@ print(f"用户输入：{user_prompt}\n","="*40)
 for i in range(5):
     print(f"---循环 {i+1}---\n")
 
-    #3.1 构建prompt
+    #3.1 构建prompt 
     full_prompt = "\n".join(prompt_history)
 
     #3.2 调用LLM进行思考
