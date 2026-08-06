@@ -1,7 +1,7 @@
 '''
 Date: 2026-08-06 10:51:23
 LastEditors: liuzhengliang
-LastEditTime: 2026-08-06 15:24:32
+LastEditTime: 2026-08-06 16:26:08
 Description: 结合前面几节完成的工具，现在模拟ReActagent范式完成智能体搭建
 '''
 
@@ -163,6 +163,27 @@ class ReActAgent:
             if not response_text:
                 print("错误:LLM未能返回有效响应。")
                 break
+
+            # 3.解析LLM的输出
+            thought,action = self._parse_output(response_text)
+
+            if thought:
+                print(f"思考: {thought}")
+            if not action:
+                print("警告:未能解析出有效的Action，流程终止。")
+                break
+            
+            # 4. 执行Action
+            if action.startswith("Finish"):
+                final_answer = re.match(r"Finish\[(.*)\]",action).group(1)
+                print(f"🎉 最终答案: {final_answer}")
+                return final_answer
+            
+            tool_name,tool_input = self._parse_action(action)
+            if not tool_function:
+                observation = f"错误:未找到名为 '{tool_name}' 的工具。"
+            else:
+                observation = tool_function(tool_input) # 调用真实工具
     
     def _parse_output(self,text:str):
         """解析LLM的输出，提取Thought和Action
