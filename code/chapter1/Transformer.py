@@ -1,7 +1,7 @@
 '''
 Date: 2026-06-17 16:16:22
 LastEditors: liuzhengliang
-LastEditTime: 2026-07-30 15:15:55
+LastEditTime: 2026-07-30 16:07:54
 Description: 模拟实现transformer架构
 '''
 import torch
@@ -17,6 +17,19 @@ class PositionalEncoding(nn.Module):
 class MultiHeadAttention(nn.Module):
     """多头注意力机制模块
     """
+    def __init__(self,d_model,num_heads) -> None:
+        super(MultiHeadAttention,self).__init__()
+        assert d_model % num_heads == 0,"d_model 必须能被 num_heads 整除"
+
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+
+        # 定义 Q, K, V 和输出的线性变换层
+        self.W_q = nn.Linear(d_model, d_model)
+        self.W_k = nn.Linear(d_model, d_model)
+        self.W_v = nn.Linear(d_model, d_model)
+        self.W_o = nn.Linear(d_model, d_model)
 
     def forward(self,query,key,value,mask):
         pass
