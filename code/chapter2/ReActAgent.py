@@ -1,7 +1,7 @@
 '''
 Date: 2026-08-06 10:51:23
 LastEditors: liuzhengliang
-LastEditTime: 2026-08-06 14:31:53
+LastEditTime: 2026-08-06 15:24:32
 Description: 结合前面几节完成的工具，现在模拟ReActagent范式完成智能体搭建
 '''
 
@@ -10,7 +10,7 @@ from typing import Any, Dict,List
 from serpapi import SerpApiClient
 from dotenv import load_dotenv
 from openai import OpenAI
-from sympy.strategies import tools
+import re
 
 # 加载环境变量
 load_dotenv()
@@ -163,7 +163,26 @@ class ReActAgent:
             if not response_text:
                 print("错误:LLM未能返回有效响应。")
                 break
+    
+    def _parse_output(self,text:str):
+        """解析LLM的输出，提取Thought和Action
+        """
+        # Thought: 匹配到Action：或者文本末尾
+        thought_match = re.search(r"Thought:\s*(.*?)(?=\nAction:|$)",text,re.DOTALL)
+        # Action: 匹配到文本末尾
+        action_match = re.search(r"Action:\s*(.*?)$",text,re.DOTALL)
+        thought = thought_match.group(1).strip() if thought_match else None
+        action = action_match.group(1).strip() if action_match else None
+        return thought,action
 
+    def _parse_action(self,action_text:str):
+        """解析action字符串，提取工具名称和输入
+        """
+
+        match = re.match(r"(\w+)\[(.*)\]",action_text,re.DOTALL)
+        if match:
+            return match.group(1),match.group(2)
+        return None,None
 
 
 # --- 工具初始化与使用示例 ---
