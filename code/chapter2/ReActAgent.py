@@ -1,8 +1,8 @@
 '''
 Date: 2026-08-06 10:51:23
 LastEditors: liuzhengliang
-LastEditTime: 2026-08-06 16:26:08
-Description: 结合前面几节完成的工具，现在模拟ReActagent范式完成智能体搭建
+LastEditTime: 2026-08-06 17:16:47
+Description: 模拟基于ReActagent范式的智能体搭建
 '''
 
 import os
@@ -14,6 +14,26 @@ import re
 
 # 加载环境变量
 load_dotenv()
+
+# ReAct 提示词模板
+REACT_PROMPT_TEMPLATE = """
+请注意，你是一个有能力调用外部工具的智能助手。
+
+可用工具如下:
+{tools}
+
+请严格按照以下格式进行回应:
+
+Thought: 你的思考过程，用于分析问题、拆解任务和规划下一步行动。
+Action: 你决定采取的行动，必须是以下格式之一:
+- `{{tool_name}}[{{tool_input}}]`:调用一个可用工具。
+- `Finish[最终答案]`:当你认为已经获得最终答案时。
+- 当你收集到足够的信息，能够回答用户的最终问题时，你必须在Action:字段后使用 Finish[最终答案] 来输出最终答案。
+
+现在，请开始解决以下问题:
+Question: {question}
+History: {history}
+"""
 
 class HelloAgentsLLM:
     """完成定制客户端，用于调用任何兼容OpenAI接口的服务，并默认使用流式响应
@@ -180,10 +200,22 @@ class ReActAgent:
                 return final_answer
             
             tool_name,tool_input = self._parse_action(action)
+            print(f"我将调用以下工具来查询：{tool_name,tool_input}")
+            tool_function = self.tool_executor.getTool(tool_name)
             if not tool_function:
                 observation = f"错误:未找到名为 '{tool_name}' 的工具。"
             else:
                 observation = tool_function(tool_input) # 调用真实工具
+            
+            print(f"👀 观察: {observation}")
+
+            # 将本轮的Action和Observation添加到历史记录中
+            self.history.append(f"Action: {action}")
+            self.history.append(f"Observation: {observation}")
+        
+        # 循环结束
+        print("已达到最大步数，流程终止。")
+        return None
     
     def _parse_output(self,text:str):
         """解析LLM的输出，提取Thought和Action
@@ -208,25 +240,13 @@ class ReActAgent:
 
 # --- 工具初始化与使用示例 ---
 if __name__ == '__main__':
-    # 1.初始化工具执行器
-    toolExecutor = ToolExecutor()
+    print("你好，请问有什么想要咨询的？")
+    question = input("input: ")
 
-    # 2.注册我们的实战搜索工具
-    search_description = "一个网页搜索引擎。当你需要回答关于时事、事实以及在你的知识库中找不到的信息时，应使用此工具。"
-    toolExecutor.regiserTool("Search",search_description,search)
+    llm_client = HelloAgentsLLM()
+    tool_exector = ToolExecutor()
+    tool_exector.regiserTool("Search","搜索引擎",search)
+    max_steps=8
 
-    # 3.打印可用的工具
-    print("\n--- 可用的工具 ---")
-    print(toolExecutor.getAvailableTools())
-
-    # 4.智能体的Action调用
-    print("\n--- 执行 Action: Search['英伟达最新的GPU型号是什么'] ---")
-    tool_name = "Search"
-    tool_input = "英伟达最新的GPU型号是什么"
-    tool_function = toolExecutor.getTool(tool_name)
-    if tool_function:
-        observation = tool_function(tool_input)
-        print("--- 观察 (Observation) ---")
-        print(observation)
-    else:
-        print(f"错误:未找到名为 '{tool_name}' 的工具。")
+    agent = ReActAgent(llm_client=llm_client,tool_exector=tool_exector,max_steps=max_steps)
+    agent.run(question)
