@@ -1,7 +1,15 @@
+'''
+Date: 2026-08-05 11:06:21
+LastEditors: liuzhengliang
+LastEditTime: 2026-08-10 15:30:55
+Description: 大模型调用基座
+'''
+
 import os
-from openai import OpenAI
+from typing import Dict,List
 from dotenv import load_dotenv
-from typing import List,Dict
+from openai import OpenAI
+
 
 # 加载环境变量
 load_dotenv()
@@ -52,21 +60,3 @@ class HelloAgentsLLM:
         except Exception as e:
             print(f"❌ 调用LLM API时发生错误: {e}")
             return None
-
-if __name__ == '__main__':
-    try:
-        llmClient = HelloAgentsLLM()
-
-        exampleMessage = [
-            {"role":"system","content":"you are a helphul assistant that writes Python code."},
-            {"role":"user","content":"写一个快速排序算法"},
-        ]
-
-        print("---调用LLM---")
-
-        responseText = llmClient.think(exampleMessage)
-        if responseText:
-            print("\n\n--- 完整模型响应 ---")
-            print(responseText)
-    except ValueError as e:
-        print(e)

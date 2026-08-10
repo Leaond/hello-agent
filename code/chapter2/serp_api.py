@@ -1,7 +1,15 @@
-from serpapi import SerpApiClient
+
+'''
+Date: 2026-08-05 11:06:21
+LastEditors: liuzhengliang
+LastEditTime: 2026-08-10 15:33:07
+Description: 搜索引擎
+'''
 import os
 from dotenv import load_dotenv
+from serpapi import SerpApiClient
 
+# 加载环境变量
 load_dotenv()
 
 def search(query:str)-> str:
@@ -44,11 +52,3 @@ def search(query:str)-> str:
 
     except Exception as e:
         return f"搜索时发生错误: {e}"
-
-
-if __name__ == "__main__":
-    try:
-       response =  search("华为")
-       print(response)
-    except e:
-        print(e)
