@@ -1,7 +1,7 @@
 '''
 Date: 2026-08-19 09:22:03
 LastEditors: liuzhengliang
-LastEditTime: 2026-08-19 10:11:31
+LastEditTime: 2026-08-19 10:22:41
 Description: 
 '''
 import os
@@ -27,7 +27,7 @@ class MyLLM(HelloAgentsLLM):
 
             # 解析 modelscope 的凭证
             self.api_key = api_key or os.getenv("MODELSCOPE_API_KEY")
-            self.base_url = base_url or os.getev("MODELSCOPE_BASE_URL")
+            self.base_url = base_url or os.getenv("MODELSCOPE_BASE_URL")
 
             if not self.api_key:
                 raise ValueError("ModelScope API key not found. Please set MODELSCOPE_API_KEY environment variable.")
