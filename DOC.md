@@ -1,7 +1,7 @@
 <!--
  * @Date: 2026-06-23 09:48:36
  * @LastEditors: liuzhengliang
- * @LastEditTime: 2026-06-25 10:55:01
+ * @LastEditTime: 2026-08-18 15:36:28
  * @Description:
 -->
 
@@ -853,3 +853,14 @@ print(output.shape)  # torch.Size([1, 64, 224, 224])
 **最后的比喻**：
 
 > 卷积核就像一个“印章”，印在图片的每个位置上。印下去时，它和那块区域做一次匹配（点积）。匹配度高的地方，印出来的颜色就深（特征明显）；匹配度低的地方，印出来就浅。每个印章只负责检测一种模式。所有印章印完之后，你就得到了一张“特征地图”。
+
+归一化
+特征维度
+特征向量
+梯度
+张量和3D张量
+激活函数
+有监督学习、无监督学习、强化学习
+
+智能体设计范式：ReAct、plan and resolve、 Relation
+智能体框架：AutoGen、agentscope、langgraph、camel、langchain
