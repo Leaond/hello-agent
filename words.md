@@ -1,7 +1,7 @@
 <!--
  * @Date: 2026-06-15 17:42:09
  * @LastEditors: liuzhengliang
- * @LastEditTime: 2026-08-06 08:47:55
+ * @LastEditTime: 2026-08-17 15:05:56
  * @Description: 快速预览md文档：Ctrl + Shift + V → 新标签页打开预览、Ctrl + K, V → 侧边栏并排预览
 -->
 
@@ -95,3 +95,10 @@
 | 84   | Probability                               | /ˌprɒbəˈbɪləti/                                     | n.   | 概率                     | 衡量事件发生可能性的数值，取值介于 0 与 1 之间，是语言模型预测下一个词的输出形式                     |
 | 85   | Model Distillation                        | /ˈmɒdəl ˌdɪstɪˈleɪʃən/                              | n.   | 模型蒸馏                 | 用大模型的输出指导小模型训练，让小模型以更低成本逼近大模型性能的压缩技术                             |
 | 86   | Organic Results                           | /ɔːrˈɡænɪk rɪˈzʌlts/                                | n.   | 自然搜索结果             | 搜索引擎依据相关性算法返回的非付费结果，是 Tavily 等搜索工具返回内容的主要来源                       |
+
+协调者 (Orchestrator)
+多智能体协作 (Multi-Agent Collaboration)
+复杂工作流控制 (Complex Workflow Control)
+ecosystem
+模态（Modality）
+引导性提示 (Inception Prompting)
