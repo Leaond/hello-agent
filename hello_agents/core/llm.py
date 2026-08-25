@@ -7,9 +7,8 @@ Description:
 import os
 from typing import Optional
 from openai import OpenAI
-from hello_agents import HelloAgentsLLM
 
-class HelloAgentsLLM(HelloAgentsLLM):
+class HelloAgentsLLM:
     """一个自定义的LLM客户端，通过继承增加对ModelScope的支持
     """
     # 重构初始化方法

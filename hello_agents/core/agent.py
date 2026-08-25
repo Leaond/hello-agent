@@ -7,10 +7,9 @@ Description:
 """agent基类"""
 from abc import ABC,abstractmethod
 from typing import Optional,Any
-from message import Message
-from llm import HelloAgentsLLM
-from config import Config
-import re
+from .message import Message
+from .llm import HelloAgentsLLM
+from .config import Config
 
 
 class Agent(ABC):

@@ -6,7 +6,7 @@ Description:
 '''
 import re
 from typing import Optional, Iterator, List
-from hello_agents import SimpleAgent, HelloAgentsLLM, Config, Message,ToolRegistry
+from hello_agents1 import SimpleAgent, HelloAgentsLLM, Config, Message,ToolRegistry
 
 
 class MySimpleAgent(SimpleAgent):
@@ -89,7 +89,7 @@ class MySimpleAgent(SimpleAgent):
     def add_tool(self,tool) ->None:
         """添加工具到Agent（便利方法）"""
         if not self.tool_registry:
-            from hello_agents import ToolRegistry
+            from hello_agents1 import ToolRegistry
             self.tool_registry = ToolRegistry()
             self.enable_tool_calling = True
 

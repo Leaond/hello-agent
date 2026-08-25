@@ -1,13 +1,13 @@
 '''
 Date: 2026-08-20 16:22:15
 LastEditors: liuzhengliang
-LastEditTime: 2026-08-21 11:19:59
+LastEditTime: 2026-08-21 13:57:47
 Description: 
 '''
 from dotenv import  load_dotenv
-from hello_agents import  HelloAgentsLLM, ToolRegistry
-from hello_agents.tools import CalculatorTool
-from my_simple_agent import MySimpleAgent
+from hello_agents1 import  HelloAgentsLLM,
+from hello_agents1.tools import CalculatorTool
+from code.chapter7.my_simple_agent import MySimpleAgent
 
 load_dotenv()
 
