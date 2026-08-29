@@ -4,6 +4,8 @@ LastEditors: liuzhengliang
 LastEditTime: 2026-08-28 17:30:56
 Description: 
 '''
+from itertools import chain
+
 """工具链管理器 - HelloAgents工具链式调用支持"""
 
 from typing import  List,Dict,Any,Optional
@@ -77,6 +79,89 @@ class ToolChain:
 
             print(f"🎉 工具链 '{self.name}' 执行完成")
             return final_result
+
+class ToolChainManager:
+    """工具链管理器"""
+
+    def __init__(self,registry:ToolRegistry):
+        self.registry = registry
+        self.chains:Dict[str,ToolChain] = {}
+
+    def register_chain(self,chain:ToolChain):
+        """注册工具链"""
+        self.chains[chain.name] = chain
+        print(f"✅ 工具链 '{chain.name}' 已注册")
+
+    def execute_chain(self,chain_name:str,input_data:str,context:Dict[str,Any] = None) ->str:
+        """执行指定的工具链"""
+        if chain_name not in self.chains:
+            return f"❌ 工具链 '{chain_name}' 不存在"
+
+        chain = self.chains[chain_name]
+        return chain.execute(self.registry, input_data, context)
+
+    def list_chain(self) ->List[str]:
+        """列出所有已注册的工具链"""
+        return list(self.chains.keys())
+
+    def get_chain_info(self,chain_name:str) -> Optional[Dict[str,Any]]:
+        """获取工具链信息"""
+        if chain_name not in self.chains:
+            return  None
+
+        chain = self.chains[chain_name]
+        return {
+            "name": chain.name,
+            "description": chain.description,
+            "steps": len(chain.steps),
+            "step_details": [
+                {
+                    "tool_name": step["tool_name"],
+                    "input_template": step["input_template"],
+                    "output_key": step["output_key"]
+                }
+                for step in chain.steps
+            ]
+        }
+
+    # 便捷函数
+    def create_research_chain(self) -> ToolChain:
+        """创建一个研究工具链：搜索-计算-总结"""
+        chain = ToolChain(
+            name="research_and_calculate",
+            description="搜索信息并进行相关计算"
+        )
+
+#         步骤1
+        chain.add_step(
+            tool_name="search",
+            input_template="{input}",
+            output_key="search_result"
+        )
+
+#         步骤2
+        chain.add_step(
+            tool_name="my_calculate",
+            input_template="2+2",
+            output_key="calc_result"
+        )
+
+        return  chain
+
+    def create_simple_chain(self) ->ToolChain:
+        """创建一个简单的工具链示例"""
+        chain = ToolChain(
+            name="simple_demo",
+            description="简单的工具链演示"
+        )
+
+#         只包含一个计算步骤
+        chain.add_step(
+            tool_name="my_calculator",
+            input_template="{input}",
+            output_key="result"
+        )
+        return  chain
 
 
 
