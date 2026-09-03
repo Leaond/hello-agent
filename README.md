@@ -62,3 +62,7 @@ Tavily 搜索引擎返回的景点推荐结果。
 - `score` 越高表示与查询越相关，可用于排序筛选
 - `content` 是经过提取和截断的摘要，适合直接作为 Agent 的观察输入
 - `raw_content` 需要在请求时设置 `include_raw_content=true` 才会返回完整网页内容
+
+问题记录
+流式响应总是在最后一次返回报错，通过控制台打印发现choices为空列表
+![img.png](img.png)
