@@ -1,10 +1,5 @@
-'''
-Date: 2026-08-19 16:16:49
-LastEditors: liuzhengliang
-LastEditTime: 2026-08-20 09:08:57
-Description: 
-'''
 """agent基类"""
+
 from abc import ABC,abstractmethod
 from typing import Optional,Any
 from .message import Message
@@ -24,7 +19,7 @@ class Agent(ABC):
         self._history: list[Message] = []
 
     @abstractmethod
-    def run(self, input_text: str,max_tool_iterations:int = 3, **kwargs) -> str:
+    def run(self, input_text: str, **kwargs) -> str:
         """运行Agent"""
         print(f"{self.name}正在处理：{input_text}")
         pass
@@ -44,3 +39,6 @@ class Agent(ABC):
     
     def __str__(self) -> str:
         return f"Agent(name={self.name}, provider={self.llm.provider})"
+
+    def __repr__(self) -> str:
+        return self.__str__()
