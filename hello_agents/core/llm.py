@@ -284,11 +284,15 @@ class HelloAgentsLLM:
 
             # 处理流式响应
             print("✅ 大语言模型响应成功:")
+
             for chunk in response:
                 content = chunk.choices[0].delta.content or ""
                 if content:
                     print(content, end="", flush=True)
                     yield content
+                if chunk.choices[0].finish_reason:
+                    print(f"\n[完成] 原因: {chunk.choices[0].finish_reason}")
+                    break
             print()  # 在流式输出结束后换行
 
         except Exception as e:
