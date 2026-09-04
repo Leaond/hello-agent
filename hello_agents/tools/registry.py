@@ -92,7 +92,7 @@ class ToolRegistry:
         else:
             return f"错误：未找到名为 '{name}' 的工具。"
 
-    def get_tools_description(self,name:str):
+    def get_tools_description(self) ->str:
         """
                获取所有可用工具的格式化描述字符串
 

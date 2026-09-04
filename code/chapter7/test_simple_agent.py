@@ -1,5 +1,6 @@
 from dotenv import  load_dotenv
-from hello_agents import HelloAgentsLLM,SimpleAgent
+from hello_agents import HelloAgentsLLM,SimpleAgent,ToolRegistry,CalculatorTool
+from my_simple_agent import MySimpleAgent
 
 load_dotenv()
 
@@ -7,13 +8,13 @@ llm = HelloAgentsLLM()
 
 # 1. 基础非流式对话
 # print("===基础对话")
-basic_agent = SimpleAgent(
-    name="基础助手",
-    llm=llm,
-    system_prompt="你是一个友好的AI助手，请用简洁明了的方式回答问题"
-
-)
-# response1 = basic_agent.run("你好，请说明一下python中Dict常用的方法")
+# basic_agent = MySimpleAgent(
+#     name="基础助手",
+#     llm=llm,
+#     system_prompt="你是一个友好的AI助手，请用简洁明了的方式回答问题"
+#
+# )
+# response1 = basic_agent.run("你好")
 # print(f"基础对话响应: {response1}\n")
 
 # 2. 带固定工具的agent
@@ -21,6 +22,7 @@ basic_agent = SimpleAgent(
 # calculator = CalculatorTool()
 # tool_registry.register_tool(calculator)
 #
+# print(tool_registry.get_tools_description())
 # enhanced_agent = MySimpleAgent(
 #     name="增强助手",
 #     llm=llm,
@@ -34,6 +36,12 @@ basic_agent = SimpleAgent(
 # 3. 流式响应
 print("=== 测试3:流式响应 ===")
 print("流式响应: ", end="")
+basic_agent = MySimpleAgent(
+    name="基础助手",
+    llm=llm,
+    system_prompt="你是一个友好的AI助手，请用简洁明了的方式回答问题"
+
+)
 for chunk in basic_agent.stream_run("请解释什么是人工智能"):
     pass
 

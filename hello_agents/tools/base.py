@@ -34,7 +34,7 @@ class Tool(ABC):
 
         return  all(param in parameters for param in required_params)
 
-    def to_diet(self) ->Dict[str,Any]:
+    def to_dict(self) ->Dict[str,Any]:
         """转换为字典格式"""
         return  {
             "name":self.name,

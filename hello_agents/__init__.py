@@ -21,8 +21,8 @@ from .agents.simple_agent import SimpleAgent
 # 工具系统
 from .tools.registry import ToolRegistry
                              # global_registry)
-# from .tools.builtin.search import SearchTool, search
-# from .tools.builtin.calculator import CalculatorTool, calculate
+from .tools.builtin.search import SearchTool, search
+from .tools.builtin.calculator import CalculatorTool, calculate
 from .tools.chain import ToolChain, ToolChainManager
 from .tools.async_executor import AsyncToolExecutor
 
@@ -50,8 +50,8 @@ __all__ = [
     # "global_registry",
     # "SearchTool",
     # "search",
-    # "CalculatorTool",
-    # "calculate",
+    "CalculatorTool",
+    "calculate",
     "ToolChain",
     "ToolChainManager",
     "AsyncToolExecutor",
