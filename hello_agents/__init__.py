@@ -14,7 +14,7 @@ from .core.exceptions import HelloAgentsException
 
 # Agent实现
 from .agents.simple_agent import SimpleAgent
-# from .agents.react_agent import ReActAgent
+from .agents.react_agent import ReActAgent
 # from .agents.reflection_agent import ReflectionAgent
 # from .agents.plan_solve_agent import PlanAndSolveAgent
 
@@ -41,7 +41,7 @@ __all__ = [
 
     # Agent范式
     "SimpleAgent",
-    # "ReActAgent",
+    "ReActAgent",
     # "ReflectionAgent",
     # "PlanAndSolveAgent",
 
@@ -49,7 +49,7 @@ __all__ = [
     "ToolRegistry",
     # "global_registry",
     # "SearchTool",
-    # "search",
+    "search",
     "CalculatorTool",
     "calculate",
     "ToolChain",
