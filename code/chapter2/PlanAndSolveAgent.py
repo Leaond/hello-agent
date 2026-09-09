@@ -1,9 +1,3 @@
-'''
-Date: 2026-08-10 14:14:17
-LastEditors: liuzhengliang
-LastEditTime: 2026-08-11 09:57:04
-Description: plan-and-Solve范式
-'''
 
 PLANNER_PROMPT_TEMPLATE = """
 你是一个顶级的AI规划专家。你的任务是将用户提出的复杂问题分解成一个由多个简单步骤组成的行动计划。
